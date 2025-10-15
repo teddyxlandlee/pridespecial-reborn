@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "pridespecial",
+  "version": "${version}",
+  "license": "CC0-1.0",
+  "description": "Enable special cases for PrideLib",
+  "authors": ["teddyxlandlee"],
+  "contributors": ["YGP-Offical"],
+  "mixins": ["pridespecial.mixins.json"],
+  "depends": {
+    "pride": "*"
+  },
+  "entrypoints": {
+    "client": [
+      "ygp.pridespecial.PrideSpecial::init"
+    ]
+  }
+}

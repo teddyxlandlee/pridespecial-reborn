@@ -1,0 +1,18 @@
+modLoader="javafml"
+loaderVersion='(0,)'
+license='CC0-1.0'
+
+[[mods]]
+namespace='ygp.pridespecial'
+modId='pridespecial'
+version='${version}'
+description='Enable special cases for PrideLib'
+authors='teddyxlandlee'
+credits='Upstream mod by @YGP-Official'
+
+[[mixins]]
+config="pridespecial.mixins.json"
+
+[[dependencies.pridespecial]]
+modId='pride'
+
