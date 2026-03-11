@@ -77,7 +77,7 @@ record PrideOverrideConfig(String caller, List<PrideFlagShape> flags) implements
     }
 
     private static boolean isJsonString(JsonElement json) {
-        return json != null && json.isJsonPrimitive() && json.getAsJsonPrimitive().isString();
+        return json.isJsonPrimitive() && json.getAsJsonPrimitive().isString();
     }
 
     private static final Gson GSON = new Gson();

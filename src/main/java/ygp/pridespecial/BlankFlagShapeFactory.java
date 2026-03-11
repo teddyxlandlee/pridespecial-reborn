@@ -2,7 +2,6 @@ package ygp.pridespecial;
 
 import com.mojang.serialization.MapCodec;
 import io.github.queerbric.pride.shape.PrideFlagShape;
-import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.*;
 import org.objectweb.asm.commons.InstructionAdapter;
 
@@ -162,7 +161,7 @@ public final class BlankFlagShapeFactory implements Opcodes {
         return cw.toByteArray();
     }
 
-    private static boolean isDerivedFromObject(@NotNull Method method) {
+    private static boolean isDerivedFromObject(Method method) {
         return switch (method.getParameterCount()) {
             // equals(Ljava/lang/Object;)Z
             case 1 -> "equals".equals(method.getName()) &&

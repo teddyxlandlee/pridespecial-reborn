@@ -2,9 +2,11 @@ package ygp.pridespecial.internal;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNullByDefault;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
 
+@NotNullByDefault
 final class PrideSpecialImpl {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String CLASS_PRIDE_FLAG = "io/github/queerbric/pride/PrideFlag";
