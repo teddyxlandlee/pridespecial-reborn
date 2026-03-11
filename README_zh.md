@@ -4,7 +4,7 @@
 ![Minecraft: 1.21+](https://img.shields.io/badge/Minecraft-1.21%2B-green)
 ![Java: 21+](https://img.shields.io/badge/Java-21%2B-red?logo=openjdk)
 
-[![上游: @YGP-Official/pridespecial](https://img.shields.io/badge/%E4%B8%8A%E6%B8%B8-%40YGP--Official%2Fpridespecial-gray?logo=modrinth)](https://modrinth.com/mod/pridespecial-reborn)
+[![上游: @YGP-Official/pridespecial](https://img.shields.io/badge/%E4%B8%8A%E6%B8%B8-%40YGP--Official%2Fpridespecial-gray?logo=modrinth)](https://modrinth.com/mod/pridespecial)
 
 此模组允许用户通过配置文件，在不同情况下覆盖由 PrideLib 提供的骄傲旗帜。
 

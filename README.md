@@ -4,7 +4,7 @@
 ![Minecraft: 1.21+](https://img.shields.io/badge/Minecraft-1.21%2B-green)
 ![Java: 21+](https://img.shields.io/badge/Java-21%2B-red?logo=openjdk)
 
-[![Upstream: @YGP-Official/pridespecial](https://img.shields.io/badge/Upstream-%40YGP--Official%2Fpridespecial-gray?logo=modrinth)](https://modrinth.com/mod/pridespecial-reborn)
+[![Upstream: @YGP-Official/pridespecial](https://img.shields.io/badge/Upstream-%40YGP--Official%2Fpridespecial-gray?logo=modrinth)](https://modrinth.com/mod/pridespecial)
 
 **English** | [中文](README_zh.md)
 
