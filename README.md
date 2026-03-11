@@ -4,7 +4,7 @@
 ![Minecraft: 1.21+](https://img.shields.io/badge/Minecraft-1.21%2B-green)
 ![Java: 21+](https://img.shields.io/badge/Java-21%2B-red?logo=openjdk)
 
-[![Upstream: @YGP-Official/pridespecial](https://img.shields.io/badge/Upstream-%40YGP--Official%2Fpridespecial-gray?style=plastic)](https://modrinth.com/mod/pridespecial)
+[![Upstream: @YGP-Official/pridespecial](https://img.shields.io/badge/Upstream-%40YGP--Official%2Fpridespecial-gray?logo=modrinth)](https://modrinth.com/mod/pridespecial-reborn)
 
 This mod allows users to override the pride flags returned by PrideLib under different circumstances
 via configuration files.
