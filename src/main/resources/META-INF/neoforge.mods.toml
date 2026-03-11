@@ -5,8 +5,9 @@ license='CC0-1.0'
 [[mods]]
 namespace='ygp.pridespecial'
 modId='pridespecial'
+displayName='PrideSpecial Reborn'
 version='${version}'
-description='Enable special cases for PrideLib'
+description='Enable special cases for PrideLib under different circumstances.'
 authors='teddyxlandlee'
 credits='Upstream mod by @YGP-Official'
 

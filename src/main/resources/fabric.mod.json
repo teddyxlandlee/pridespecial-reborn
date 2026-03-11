@@ -1,9 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "pridespecial",
+  "name": "PrideSpecial Reborn",
   "version": "${version}",
   "license": "CC0-1.0",
-  "description": "Enable special cases for PrideLib",
+  "description": "Enable special cases for PrideLib under different circumstances.",
   "authors": ["teddyxlandlee"],
   "contributors": ["YGP-Offical"],
   "mixins": ["pridespecial.mixins.json"],
