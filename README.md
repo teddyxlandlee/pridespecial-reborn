@@ -6,7 +6,9 @@
 
 [![Upstream: @YGP-Official/pridespecial](https://img.shields.io/badge/Upstream-%40YGP--Official%2Fpridespecial-gray?logo=modrinth)](https://modrinth.com/mod/pridespecial-reborn)
 
-This mod allows users to override the pride flags returned by PrideLib under different circumstances
+**English** | [中文](README_zh.md)
+
+This mod allows users to override the pride flags provided by PrideLib under different circumstances
 via configuration files.
 
 ## Configuration file
