@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "version": "1",
+  "id": "pridespecial-testmod-1",
+  "entrypoints": {
+    "client": [
+      "ygp.pridespecial.testmod.PrideSpecialTestMod::init"
+    ]
+  }
+}

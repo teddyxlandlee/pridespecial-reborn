@@ -30,9 +30,6 @@ dependencies {
     compileOnly("org.jetbrains:annotations:26.1.0")
     implementation("org.ow2.asm:asm-commons:9.3")
 
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testRuntimeOnly("org.apache.logging.log4j:log4j-core:2.20.0")
     testRuntimeOnly("com.google.code.gson:gson:2.13.2")
     testRuntimeOnly("com.mojang:datafixerupper:8.0.16")
