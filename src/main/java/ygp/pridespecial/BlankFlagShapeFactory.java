@@ -114,7 +114,7 @@ public final class BlankFlagShapeFactory implements Opcodes {
 
         // in case problematic override
         mv = new InstructionAdapter(cw.visitMethod(
-                ACC_PUBLIC | ACC_FINAL, "clone", "()Ljava/lang/Object;",
+                ACC_PUBLIC | ACC_FINAL | ACC_SYNTHETIC, "clone", "()Ljava/lang/Object;",
                 null, new String[]{Type.getInternalName(CloneNotSupportedException.class)}
         ));
         {
@@ -165,7 +165,9 @@ public final class BlankFlagShapeFactory implements Opcodes {
     private static boolean isDerivedFromObject(@NotNull Method method) {
         return switch (method.getParameterCount()) {
             // equals(Ljava/lang/Object;)Z
-            case 1 -> method.getReturnType() == boolean.class && method.getParameterTypes()[0] == Object.class;
+            case 1 -> "equals".equals(method.getName()) &&
+                    method.getReturnType() == boolean.class &&
+                    method.getParameterTypes()[0] == Object.class;
             case 0 -> switch (method.getName()) {
                 // clone()Ljava/lang/Object;
                 case "clone" -> method.getReturnType() == Object.class;
