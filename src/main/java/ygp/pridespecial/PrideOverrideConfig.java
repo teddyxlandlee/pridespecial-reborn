@@ -25,11 +25,16 @@ record PrideOverrideConfig(String caller, List<PrideFlagShape> flags) implements
 
     @Override
     public boolean test(StackWalker.StackFrame stackFrame) {
-        String caller = this.caller;
-        if (isReverse()) caller = caller.substring(1);
+        if (isReverse()) {
+            return !implTest(caller.substring(1), stackFrame);
+        } else {
+            return implTest(caller, stackFrame);
+        }
+    }
 
+    private static boolean implTest(String caller, StackWalker.StackFrame stackFrame) {
         if (caller.isBlank()) return true;
-        return stackFrame.getClassName().replace('/', '.').equals(caller);
+        return stackFrame.getClassName().equals(caller.replace('/', '.'));
     }
 
     static PrideOverrideConfig fromJson(JsonElement json) {
@@ -76,8 +81,8 @@ record PrideOverrideConfig(String caller, List<PrideFlagShape> flags) implements
     }
 
     private static final Gson GSON = new Gson();
-    private static final JsonArray DEFAULT_ARR = GSON.fromJson(
-            "[{\"caller\":\"\",\"flags\":[{\"colors\":[\"#ff0000\",\"#ffff00\",\"#0000ff\",\"#ffffff\",\"#000000\"]}]}]",
+    private static final JsonArray DEFAULT_ARR = GSON.fromJson("""
+            [{"caller":"","flags":[{"colors":["#ff0000","#ffff00","#0000ff","#ffffff","#000000"]}]}]""",
             JsonArray.class
     );
     static JsonArray getDefault() {

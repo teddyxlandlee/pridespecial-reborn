@@ -37,7 +37,7 @@ final class Platform {
                 CONFIG_DIR = (Path) lookup.findVirtual(fabricLoader, "getConfigDir", MethodType.methodType(Path.class)).invoke(loaderInstance);
             } else {
                 Class<?> c = Class.forName("net.neoforged.fml.loading.FMLPaths");
-                Object enumPath = lookup.findStaticVarHandle(c, "CONFIGDIR", c).get();
+                Object enumPath = lookup.findStaticGetter(c, "CONFIGDIR", c).invoke();
                 CONFIG_DIR = (Path) lookup.findVirtual(c, "get", MethodType.methodType(Path.class)).invoke(enumPath);
             }
 

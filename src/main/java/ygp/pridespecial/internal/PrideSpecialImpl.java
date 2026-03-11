@@ -12,10 +12,12 @@ final class PrideSpecialImpl {
     private static final String METHOD_SELECT = "select";
     private static final String DESC_SELECT = "(Ljava/util/random/RandomGenerator;)L" + CLASS_PRIDE_FLAG + ';';
     private static boolean isTargetMethod(MethodNode m) {
-        return "getRandomFlag".equals(m.name) && ("(Ljava/util/Random;)L" + CLASS_PRIDE_FLAG + ';').equals(m.desc) && (m.access & Opcodes.ACC_STATIC) != 0;
+        return "getRandomFlag".equals(m.name) &&
+                ("(Ljava/util/Random;)L" + CLASS_PRIDE_FLAG + ';').equals(m.desc) &&
+                (m.access & Opcodes.ACC_STATIC) != 0;
     }
 
-    PrideSpecialImpl() {}
+    private PrideSpecialImpl() {}
 
     public static void modifyNode(ClassNode node) {
         MethodNode m = node.methods.stream().filter(PrideSpecialImpl::isTargetMethod).findAny().orElse(null);
@@ -46,7 +48,6 @@ final class PrideSpecialImpl {
         l.add(new FrameNode(Opcodes.F_SAME1, -1, null, 1, new Object[]{"java/lang/Object"}));
         l.add(new InsnNode(Opcodes.POP));
 
-        l.add(m.instructions);
-        m.instructions = l;
+        m.instructions.insert(l);
     }
 }

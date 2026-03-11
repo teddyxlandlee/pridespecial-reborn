@@ -2,7 +2,6 @@ package ygp.pridespecial;
 
 import com.mojang.serialization.MapCodec;
 import io.github.queerbric.pride.shape.PrideFlagShape;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.*;
 import org.objectweb.asm.commons.InstructionAdapter;
@@ -27,20 +26,13 @@ public final class BlankFlagShapeFactory implements Opcodes {
         return SHAPE_TYPE;
     }
 
-    @Contract("->new")
-    public static PrideFlagShape create() {
-        try {
-            return (PrideFlagShape) lookupInSCFlagShapeClass.findConstructor(
-                    lookupInSCFlagShapeClass.lookupClass(), MethodType.methodType(void.class)
-            ).invoke();
-        } catch (Throwable e) {
-            throw new IncompatibleClassChangeError();
-        }
+    public static PrideFlagShape getInstance() {
+        return soleInstance;
     }
 
     private BlankFlagShapeFactory() {}
 
-    private static final MethodHandles.Lookup lookupInSCFlagShapeClass;
+    private static final PrideFlagShape soleInstance;
     private static final MapCodec<? extends PrideFlagShape> CODEC = codecFactory();
     public static final String ID = "pridespecial:blank";
     private static final PrideFlagShape.Type SHAPE_TYPE;
@@ -63,24 +55,28 @@ public final class BlankFlagShapeFactory implements Opcodes {
         }
 
         try {
-            lookupInSCFlagShapeClass = lookup.defineHiddenClassWithClassData(
+            lookup = lookup.defineHiddenClassWithClassData(
                     genShapeClass(), type, true,
-                    MethodHandles.Lookup.ClassOption.NESTMATE, MethodHandles.Lookup.ClassOption.STRONG
+                    MethodHandles.Lookup.ClassOption.STRONG
             );
-        } catch (IllegalAccessException e) {
-            throw new IncompatibleClassChangeError("Cannot define class");
+            var constructorHandle = lookup.findConstructor(
+                    lookup.lookupClass(), MethodType.methodType(void.class)
+            );
+            soleInstance = (PrideFlagShape) constructorHandle.invoke();
+        } catch (Throwable e) {
+            throw new IllegalStateException("Cannot instantiate BlankFlagShape", e);
         }
 
         SHAPE_TYPE = type;
     }
 
     private static MapCodec<? extends PrideFlagShape> codecFactory() {
-        return MapCodec.unit(BlankFlagShapeFactory::create);
+        return MapCodec.unit(BlankFlagShapeFactory::getInstance);
     }
 
     private static byte[] genShapeClass() {
-        List<Method> methodsToOverride = Arrays.stream(PrideFlagShape.class.getMethods())
-                .filter(m -> !isDerivedFromObject(m) && !Modifier.isStatic(m.getModifiers()) && Modifier.isAbstract(m.getModifiers()))
+        List<Method> methodsToOverride = Arrays.stream(PrideFlagShape.class.getMethods())               // public
+                .filter(m -> !isDerivedFromObject(m) && Modifier.isAbstract(m.getModifiers()))  // (non-static) abstract
                 .toList();
 
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);

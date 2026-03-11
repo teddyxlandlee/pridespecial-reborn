@@ -35,7 +35,7 @@ public final class SingleColorFlagShapeFactory implements Opcodes {
 
     private SingleColorFlagShapeFactory() {}
 
-    private static final MethodHandles.Lookup lookupInSCFlagShapeClass;
+    private static final MethodHandle scFlagConstructor;
     private static final MapCodec<? extends PrideFlagShape> CODEC = codecFactory();
     public static final String ID = "pridespecial:single";
     private static final PrideFlagShape.Type SHAPE_TYPE;
@@ -58,29 +58,25 @@ public final class SingleColorFlagShapeFactory implements Opcodes {
         }
 
         try {
-            lookupInSCFlagShapeClass = lookup.defineHiddenClassWithClassData(
+            lookup = lookup.defineHiddenClassWithClassData(
                     genShapeClass(), type, true,
-                    MethodHandles.Lookup.ClassOption.NESTMATE, MethodHandles.Lookup.ClassOption.STRONG
+                    MethodHandles.Lookup.ClassOption.STRONG
             );
-        } catch (IllegalAccessException e) {
-            throw new IncompatibleClassChangeError("Cannot define class");
+            scFlagConstructor = lookup.findConstructor(
+                    lookup.lookupClass(), MethodType.methodType(void.class, int.class)
+            ).asType(MethodType.methodType(AbstractSingleColorFlagShape.class, int.class));
+        } catch (IllegalAccessException | NoSuchMethodException e) {
+            throw new IllegalStateException("Cannot define class", e);
         }
 
         SHAPE_TYPE = type;
     }
 
     private static AbstractSingleColorFlagShape createFlagInternal(int color) {
-        MethodHandle constructor;
         try {
-            constructor = lookupInSCFlagShapeClass.findConstructor(lookupInSCFlagShapeClass.lookupClass(), MethodType.methodType(void.class, int.class));
-        } catch (Exception e) {
-            throw new IncompatibleClassChangeError();
-        }
-
-        try {
-            return (AbstractSingleColorFlagShape) constructor.invoke(color);
+            return (AbstractSingleColorFlagShape) scFlagConstructor.invokeExact(color);
         } catch (Throwable e) {
-            throw new IncompatibleClassChangeError();
+            throw new IllegalStateException("Cannot instantiate SingleColorFlagShape", e);
         }
     }
 

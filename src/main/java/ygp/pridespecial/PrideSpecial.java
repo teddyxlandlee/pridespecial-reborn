@@ -20,12 +20,12 @@ import java.util.random.RandomGenerator;
 public final class PrideSpecial {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final StackWalker STACK_WALKER = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
+    private static final StackWalker STACK_WALKER = StackWalker.getInstance(/*DROP_METHOD_INFO*/);
 
-    private static List<PrideOverrideConfig> prideOverrideConfigs;
+    private static final List<PrideOverrideConfig> prideOverrideConfigs = initConfig();
     private PrideSpecial() {}
 
-    private static void init0() {
+    private static List<PrideOverrideConfig> initConfig() {
         BuiltinFlagShapes.init();
 
         var configFile = Platform.getConfigDir().resolve("pridespecial.json");
@@ -33,7 +33,7 @@ public final class PrideSpecial {
             var arr = GSON.fromJson(reader, JsonArray.class);
             List<PrideOverrideConfig> configs = new ArrayList<>();
             arr.forEach(e -> configs.add(PrideOverrideConfig.fromJson(e)));
-            prideOverrideConfigs = configs;
+            return configs;
         } catch (Exception e) {
             if (e instanceof NoSuchFileException) {
                 JsonArray defaultArr = PrideOverrideConfig.getDefault();
@@ -44,7 +44,7 @@ public final class PrideSpecial {
                 }
             }
             LOGGER.warn("Failed to load {}", configFile, e);
-            prideOverrideConfigs = Collections.singletonList(PrideOverrideConfig.getDefaultConfig());
+            return Collections.singletonList(PrideOverrideConfig.getDefaultConfig());
         }
     }
 
@@ -54,12 +54,10 @@ public final class PrideSpecial {
         if (random == null) return null;
 
         List<PrideOverrideConfig> configs = prideOverrideConfigs;
-        if (configs == null || configs.isEmpty()) return null;
+        if (configs.isEmpty()) return null;
 
         PrideOverrideConfig config = configs.stream()
-                .filter(cfg -> STACK_WALKER.walk(
-                        cfg.isReverse() ? s -> s.noneMatch(cfg) : s -> s.anyMatch(cfg)
-                ))
+                .filter(cfg -> STACK_WALKER.walk(s -> s.anyMatch(cfg)))
                 .findFirst()
                 .orElse(null);
 
@@ -74,11 +72,6 @@ public final class PrideSpecial {
         };
     }
 
-    static {
-        init0();
-    }
-
-    @SuppressWarnings("unused")
     public static void init() {
         // just load the class
     }

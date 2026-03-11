@@ -7,5 +7,5 @@ import ygp.pridespecial.internal.Proud;
 @Pseudo
 @Mixin(targets = "io.github.queerbric.pride.PrideFlags", remap = false)
 @Proud
-abstract class Stub {
+abstract public class Stub {
 }
