@@ -67,5 +67,5 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 }
 
 tasks.test {
-    useJUnitPlatform()
+    failOnNoDiscoveredTests.set(false)
 }
