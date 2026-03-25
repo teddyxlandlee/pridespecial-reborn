@@ -42,11 +42,8 @@ jobs:
           java-version: '21'
           distribution: 'microsoft'
 
-      - name: Set up Modrinth token
-        run: echo "MR_TOKEN=${{ secrets.MODRINTH_TOKEN }}" >> $GITHUB_ENV
-
       - name: Publish to Modrinth
-        run: ./gradlew modrinth
+        run: env "MR_TOKEN=${{ secrets.MR_TOKEN }}" ./gradlew modrinth
 
       - name: Upload publish artifacts
         uses: actions/upload-artifact@v4
