@@ -1,6 +1,7 @@
 plugins {
     id("java")
-    id("xland.gradle.forge-init-injector") version "1.2.0"
+    id("xland.gradle.forge-init-injector") version "3.1.0"
+    id("com.modrinth.minotaur") version "2.+"
 }
 
 group = "xland.mcmod"
@@ -68,4 +69,43 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 
 tasks.test {
     failOnNoDiscoveredTests.set(false)
+}
+
+fun supportedGameVersions() : Provider<List<String>> = provider {
+    // Stable game versions
+    val ret = mutableListOf("1.21")
+    ret += (1..11).map { "1.21.$it" }
+
+    ret += listOf("26.1")
+    // Beta versions
+//    ret += listOf("26.1-snapshot-6")
+    ret
+}
+
+private val mrToken = providers.environmentVariable("MR_TOKEN")
+modrinth {
+    token = mrToken
+    projectId = "XiW3GKO0"
+    versionNumber = project.version.toString()
+    versionName = providers.gradleProperty("mr_version_name_template").map {
+        it.format(project.version)
+    }
+    changelog = providers.gradleProperty("mr_changelog")
+    file = tasks.jar.flatMap { it.archiveFile }
+    additionalFiles.add(tasks["sourcesJar"])
+    versionType = providers.gradleProperty("mr_version_type")
+    gameVersions = supportedGameVersions()
+    loaders = providers.gradleProperty("mr_supported_loaders").map {
+        it.split(',').map(String::trim)
+    }
+    //dependencies = listOf()
+
+    detectLoaders = false
+    autoAddDependsOn = false
+}
+
+tasks.modrinth {
+    doFirst {
+        require(mrToken.isPresent) { "MR_TOKEN environment variable is not set" }
+    }
 }
