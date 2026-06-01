@@ -1,7 +1,7 @@
 pluginManagement {
     repositories {
-        maven("https://mvn.7c7.icu") {
-            name = "7c7 Maven"  // for Forge-Init-Injector
+        maven("https://maven.hixland.com") {
+            name = "Teddy's Maven"  // for Forge-Init-Injector
         }
         gradlePluginPortal()
     }
