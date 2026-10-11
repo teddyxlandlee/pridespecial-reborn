@@ -76,7 +76,9 @@ fun supportedGameVersions() : Provider<List<String>> = provider {
     val ret = mutableListOf("1.21")
     ret += (1..11).map { "1.21.$it" }
 
-    ret += listOf("26.1")
+    ret += listOf(
+        "26.1", "26.1.1", "26.1.2", "26.2", "26.3",
+    )
     // Beta versions
 //    ret += listOf("26.1-snapshot-6")
     ret
