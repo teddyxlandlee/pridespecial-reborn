@@ -31,10 +31,9 @@ dependencies {
     compileOnly("org.jetbrains:annotations:26.1.0")
     implementation("org.ow2.asm:asm-commons:9.3")
 
-    testRuntimeOnly("org.apache.logging.log4j:log4j-core:2.20.0")
+    testRuntimeOnly("org.apache.logging.log4j:log4j-core:2.25.4")
     testRuntimeOnly("com.google.code.gson:gson:2.13.2")
-    testRuntimeOnly("com.mojang:datafixerupper:8.0.16")
-    testRuntimeOnly("com.google.code.gson:gson:2.13.2")
+    testRuntimeOnly("org.ow2.asm:asm-commons:9.11.1")
 }
 
 forgeInitInjector {
@@ -56,6 +55,11 @@ tasks.processResources {
 }
 
 java.withSourcesJar()
+
+java.toolchain {
+    languageVersion = JavaLanguageVersion.of(25)
+    vendor = JvmVendorSpec.MICROSOFT
+}
 
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
